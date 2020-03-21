@@ -8,7 +8,7 @@ Tags:
   - Flutter
 ---
 
-Nếu ai mới tìm hiểu về Flutter như mình sẽ gặp một chút khó khăn khi làm quen với các khái niệm. Một trong số đó là BLoC hay Bessiness Logic Component.
+Nếu ai mới tìm hiểu về Flutter như mình sẽ gặp một chút khó khăn khi làm quen với các khái niệm. Một trong số đó là BLoC hay Bussiness Logic Component.
 
 Đầu tiên nói về BLoC pattern nói chung:
  - BLoC đơn giản là khối xử lý logic được thiết kế để tách riêng phần code logic ra khỏi phần giao diện. Nếu bạn đã biết MVC thì BLoC không còn gì xa lạ.
