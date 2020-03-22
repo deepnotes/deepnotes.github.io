@@ -35,7 +35,7 @@ Hơn nữa, khi bạn đọc đến đây, có nghĩa là mình đã hoàn thàn
 
 Bonus, thêm cái ảnh mình vẽ sketch cái app đang làm thể hiện tí về productive :D
 
-![](https://github.com/deepnotes/deepnotes.github.io/blob/master/assets/images/app-sketch.jpg)
+![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/app-sketch.jpg)
 
 Ok! Chữ viết tay cần được cải thiện T_T
 
