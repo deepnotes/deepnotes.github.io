@@ -38,9 +38,9 @@ $$
 
 Trong đó:
 
-- $$N_{L^{obj}} = \sum_{i=0}^{S^2} \sum_{j=0}^B L_{i,j}^{\text{obj}}$$
+- $$N_{L^{obj}}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}}$$ gsgsdfgsdfgsdfg
 
-- $$N^{conf} =  \sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}} + L_{i,j}^{\text{noobj}}(1-L_{i,j}^{\text{obj}})$$
+- $$N^{conf}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}} + L_{i,j}^{\text{noobj}}(1-L_{i,j}^{\text{obj}})$$ adfád
 
 - $$\text{preduiction}_{i,j}=(\hat{x}_{i,j},\hat{y}_{i,j},\hat{w}_{i,j},\hat{h}_{i,j})$$
 
