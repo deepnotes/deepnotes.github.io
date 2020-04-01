@@ -12,6 +12,7 @@ categories:
 
 Biểu diễn bằng công thức toán học của YOLOv2 Loss Function hay Region Loss như sau:
 
+$$
 \begin{align}
 
 loss & = loss^{xywh}_{i,j} + loss^{p}_{i,j} + loss^{c}_{i,j} \\
@@ -33,3 +34,4 @@ L^{obj}_{i,j}(IoU^{ground truth_{i,j}}_{prediction_{i,j}} - \hat{c}_{i,j})^2
 L^{noobj}_{i,j}(0 - \hat{c}_{i,j})^2
 
 \end{align}
+$$
