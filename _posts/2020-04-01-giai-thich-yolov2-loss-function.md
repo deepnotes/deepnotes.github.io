@@ -74,12 +74,31 @@ $$
 
 Bắt đầu phân tích nha:
 
+## Các thành phần của hàm loss
+
 Đầu tiên, bạn phải nắm rõ output của YOLOv2 có format như thế nào. Nếu chưa rõ bạn phải đọc lại nhé. Output của YOLO có format $$[grid, grid, B, 5+class]$$. Với $$grid * gird$$ là $$chiều dài * chiều rộng$$ của feature map mà yolo output ra. Trên mạng người ta hay viết "YOLO chia bức ảnh thành $$grid*grid$$ ô" thì đó chính là size của output. $$B$$ là số lượng Anchor box, $$5+class$$ chính là thông tin của mỗi box bao gồm $$[x, y, h, w, confidence, xác suất của từng class]$$.
 
-Công thức đầu tiên cho ta thấy, region loss bao gồm 3 thành phần. xem qua 3 thành phần đó là gì nha:
+Trong công thức toán học ở trên, grid chính là $$S$$, $$grid * grid$$ là $$S^2$$. B trong công thức chính là số lượng anchor box. Vậy, i chạy từ 0 tới $$S^2%% là duyệt hết toàn bộ các ô. Còn j chạy từ 0 tới B là trong mỗi ô duyệt hết toàn bộ boxes trên mỗi ô, số lượng chính các boxes dự đoán trên mỗi ô chính là số lượng anchor box.
 
-- Thành phần đầu tiên là $$loss^{xywh}_(i,j)$$, Bạn thấy xywh trong công thức không, đây là loss liên quan đến vị trí (x,y) và độ lớn của bouding box (w,h).
+Tối đa, yolo có thể dự đoán được bao nhiêu object trong một bức ảnh? đó chính là $$S*S*B$$ boxes với mỗi box có thông tin $$(5+n_class)$$
 
-- Thành phần thứ hai là $$loss^{p}_(i,j)$$, đây là class loss, $$p$$ là ký hiện cho xác suất. Bạn còn nhớ khi YOLO tìm được bounding box của object, nó phải chỉ ra object đó thuộc class nào? Ôtô, xe máy, xe đạp, hay người đi bộ. Vậy loss này để phạt model nếu nếu model đoán sai class của object
+Okie, quay lại với công thức đầu tiên, ta thấy, region loss bao gồm 3 thành phần. xem qua 3 thành phần $$loss^{xywh}_{i,j}$$, $$ loss^{p}_{i,j}$$, và $$loss^{c}_{i,j}$$:
 
-- Thành phần thứ ba là $$loss^{c}_{i,j}, c là ký hiệu của confidence. Loss này liên quan đến confidence score.
+- Thành phần đầu tiên là $$loss^{xywh}_{i,j}$$, Bạn thấy xywh trong công thức không, đây là loss liên quan đến vị trí (x,y) và độ lớn của bouding box (w,h), ta gọi đây là loss tọa độ.
+
+- Thành phần thứ hai là $$loss^{p}_{i,j}$$, đây là class loss, $$p$$ là ký hiện cho xác suất. Bạn còn nhớ khi YOLO tìm được bounding box của object, nó phải chỉ ra object đó thuộc class nào? Ôtô, xe máy, xe đạp, hay người đi bộ. Vậy loss này để phạt model nếu nếu model đoán sai class của object. Ta gọi loss này là Classification loss.
+
+- Thành phần thứ ba là $$loss^{c}_{i,j}$$, c là ký hiệu của confidence. Loss này liên quan đến confidence score. Ta gọi là Confidence loss.
+
+## Loss tọa độ
+
+Đối với trường hợp liên quan đến dự đoán giá trị, ta thường dùng khoảng cách để tính độ sai lệch của giá trị đoán được với giá trị của nhãn. Khoảng cách này đơn giản nhất là khoảng cách euclid. Tuy nhiên trong trường hợp này ta dùng Mean Square Error (MSE) đơn giản vì nó đơn giản. 
+
+Ở đây cần chú ý là ta không tính MSE đối với toàn bộ bounding boxes, ta chỉ tính MSE đối với trường hợp 
+
+## Classification loss
+
+## Confidence loss
+
+
+
