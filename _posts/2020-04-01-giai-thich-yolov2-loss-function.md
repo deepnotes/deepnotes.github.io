@@ -10,6 +10,14 @@ categories:
 </script>
 ---
 
+- [Các thành phần của hàm loss](#các-thành-phần-của-hàm-loss)
+
+- [Loss tọa độ](#loss-tọa-độ)
+
+- [Classification loss](#classification-loss)
+
+- [Confidence loss](#confidence-loss)
+
 Đầu tiên, ta xem qua biểu diễn bằng công thức toán học của YOLOv2 Loss Function hay Region Loss như sau, đừng vội choáng ngợp, ta sẽ giải thích từng bước từng bước sau:
 
 $$
@@ -118,14 +126,22 @@ Thành phần $$L^{noobj}_{i,j}$$ này có 2 yếu tố để quyết định, 1
 
 Hàm loss thực chất là để phạt model để cho nó dự đoán đúng hơn về thông tin gì đó. Ở đây confidence phạt model về cái gì. Tại sao confidence loss lại quan tâm tới $$L^{noobj}_{i,j}$$ trong khi những cái khác thì không?
 
-Câu trả lời là do khi chạy inference, tức là lúc test chứ không phải lúc train nữa, hệ số confidence (c) này quyết định box dự đoán có được giữ lại hay không. Những box nào có c < 0.6 đều bị loại bỏ. Vì thế trong lúc train, nếu như model dự đoán là có obj (c > 0.6) trong khi thực tế groud truth không chứa object nào, thì ta phải phạt model. Cùng xem bảng sau để cover tổng quát hơn nhé các trường hợp nhé
+Câu trả lời là do khi chạy inference, tức là lúc test chứ không phải lúc train nữa, hệ số confidence (c) này quyết định box dự đoán có được giữ lại hay không. Những box nào có c < 0.6 đều bị loại bỏ. Vì thế trong lúc train, nếu như model dự đoán là có obj (c > 0.6) trong khi thực tế groud truth không chứa object nào, thì ta phải phạt model. Cùng xem bảng sau để cover tổng quát hơn, từ công thức của confidence loss, ta vẽ bảng sau:
 
 | | $$c_{i,j} = 1$$ |  $$c_{i,j} = 0$$ |
 |---|---|---|
-| $$\text{preduiction}_{i,j}^{\text{ground truth}_{i',j'}} < 0.6 $$ | quan tâm | quan tâm |
-| $$\text{preduiction}_{i,j}^{\text{ground truth}_{i',j'}} >= 0.6 $$ | quan tâm | không quan tâm |
+| $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$ | quan tâm | quan tâm |
+| $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6$$ | quan tâm | không quan tâm |
 
-Nhìn vào bảng trên ta có, đối với những box có chứa object tức là  $$c_{i,j} = 1$$, thì model dự đoán c bao nhiêu ta cũng quan tâm. Ta phạt để cho $$\hat{c}$$ dự đoán sát với c thực tế. Mặc dù c label là 1. Vì c này liên quan đến bounding box, rõ ràng c thực tế không thể lấy theo label là 1 được. Nó phải được tính dự trên $$\hat{x}, \hat{y}, \hat{w}, \hat{h}$$ so với label $$x,y,w,h$$, tức là tính IoU, tức là tính $$\text{preduiction}_{i,j}^{\text{ground truth}_{i',j'}}$$
+
+
+Nhìn vào bảng trên ta có, hàm loss phạt model về giá trị $$\hat{c}_{i,h}$$ liên quan đến giá tọa độ. Đối với mỗi box dự đoán, giá trị ground truth confidence của box dự đoán không phải là 0 hoặc 1 mà chính là giá trị IoU như phân tích ở trên. Vậy hàm confidence loss phạt khi ground truth ở mộ số điều kiện nào đó. Cụ thể là 4 điều kiện như trên bảng:
+
+- Khi $$c_{i,j} = 1$$ (cột 2) thì ta quan tâm điều chỉnh $$\hat{c}$$ dự đoán này sát với $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}}$$ nhất.
+
+- Khi $$c_{i,j} = 0$$ (cột 3) thì ta quan tâm điều chỉnh $$\hat{c}$$ dự đoán này xuống 0 trong trường hợp $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$ nhất.
+
+đối với những box có chứa object tức là  $$c_{i,j} = 1$$, thì model dự đoán c bao nhiêu ta cũng quan tâm. Ta phạt để cho $$\hat{c}$$ dự đoán sát với c thực tế. Mặc dù c label là 1. Vì c này liên quan đến bounding box, rõ ràng c thực tế không thể lấy theo label là 1 được. Nó phải được tính dự trên $$\hat{x}, \hat{y}, \hat{w}, \hat{h}$$ so với label $$x,y,w,h$$, tức là tính IoU, tức là tính $$\text{preduiction}_{i,j}^{\text{ground truth}_{i',j'}}$$
 
 
 
