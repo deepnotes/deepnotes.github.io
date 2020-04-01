@@ -78,9 +78,9 @@ Bắt đầu phân tích nha:
 
 Đầu tiên, bạn phải nắm rõ output của YOLOv2 có format như thế nào. Nếu chưa rõ bạn phải đọc lại nhé. Output của YOLO có format $$[grid, grid, B, 5+class]$$. Với $$grid * gird$$ là $$chiều dài * chiều rộng$$ của feature map mà yolo output ra. Trên mạng người ta hay viết "YOLO chia bức ảnh thành $$grid*grid$$ ô" thì đó chính là size của output. $$B$$ là số lượng Anchor box, $$5+class$$ chính là thông tin của mỗi box bao gồm $$[x, y, h, w, confidence, xác suất của từng class]$$.
 
-Trong công thức toán học ở trên, grid chính là $$S$$, $$grid * grid$$ là $$S^2$$. B trong công thức chính là số lượng anchor box. Vậy, i chạy từ 0 tới $$S^2%% là duyệt hết toàn bộ các ô. Còn j chạy từ 0 tới B là trong mỗi ô duyệt hết toàn bộ boxes trên mỗi ô, số lượng chính các boxes dự đoán trên mỗi ô chính là số lượng anchor box.
+Trong công thức toán học ở trên, grid chính là $$S$$, $$grid * grid$$ là $$S^2$$. B trong công thức chính là số lượng anchor box. Vậy, i chạy từ 0 tới $$S^2$$ là duyệt hết toàn bộ các ô. Còn j chạy từ 0 tới B là trong mỗi ô duyệt hết toàn bộ boxes trên mỗi ô, số lượng chính các boxes dự đoán trên mỗi ô chính là số lượng anchor box.
 
-Tối đa, yolo có thể dự đoán được bao nhiêu object trong một bức ảnh? đó chính là $$S*S*B$$ boxes với mỗi box có thông tin $$(5+n_class)$$
+Tối đa, yolo có thể dự đoán được bao nhiêu object trong một bức ảnh? đó chính là $$S*S*B$$ boxes với mỗi box có thông tin $$(5+n\nclass)$$
 
 Okie, quay lại với công thức đầu tiên, ta thấy, region loss bao gồm 3 thành phần. xem qua 3 thành phần $$loss^{xywh}_{i,j}$$, $$ loss^{p}_{i,j}$$, và $$loss^{c}_{i,j}$$:
 
@@ -92,13 +92,26 @@ Okie, quay lại với công thức đầu tiên, ta thấy, region loss bao g�
 
 ## Loss tọa độ
 
-Đối với trường hợp liên quan đến dự đoán giá trị, ta thường dùng khoảng cách để tính độ sai lệch của giá trị đoán được với giá trị của nhãn. Khoảng cách này đơn giản nhất là khoảng cách euclid. Tuy nhiên trong trường hợp này ta dùng Mean Square Error (MSE) đơn giản vì nó đơn giản. 
+Đối với trường hợp liên quan đến dự đoán giá trị, ta thường dùng khoảng cách để tính độ sai lệch của giá trị đoán được với giá trị của nhãn. Khoảng cách này đơn giản nhất là khoảng cách euclid. Tuy nhiên trong trường hợp này ta dùng Mean Square Error (MSE) đơn giản vì nó đơn giản. :D
 
-Ở đây cần chú ý là ta không tính MSE đối với toàn bộ bounding boxes, ta chỉ tính MSE đối với trường hợp 
+Ở đây cần chú ý là ta không tính MSE đối với toàn bộ bounding boxes mà model dự đoán so với groud truth, ta chỉ tính MSE đối với những box xuất hiện object.Tuy ở trong công thức, i chạy từ 0 đến $$S^2$$ và j chạy từ 0 đến $$B$$ tuy nhiên, hệ số $$L^{obj}_{i,j} sẽ có giá trị bằng 0 tại các box không xuất hiện object, điều này sẽ làm cho các boxes không chứa object này ko còn liên quan đến giá trị của hàm loss nữa. Okie, loss tọa độ không có gì khó phải không?
 
 ## Classification loss
 
+Bạn chú ý rằng đối với YOLO, việc xác định xác suất của object xuất hiện trong dự đoán thuộc class gì là xác suất có điều kiện. Xác suất này với điều kiện chính là chắc chắn phải xuất hiện objet trong dự đoán, vì thế trong công thức trên, Classification chỉ áp dụng đối với những box nào xuất hiện object. Cũng giống như loss tọa độ, hệ số $$L^{obj}_{i,j}$$ giúp hàm loss loại bỏ những box không chứa object. Còn lại đối với box chứa object, ta dùng Negative Log Likelihood để tính độ tương đồng giữa hai phân phối xác suất này. Classsification loss cũng đơn giản phải không?
+
 ## Confidence loss
 
+Cuối cùng khó nhằn nhất là confidence loss. Ta biết giá trị ở confidence (c) này thể hiện cho "độ tự tin" của việc "object xuất hiện trong dự đoán", hay ta có thể hiểu đó là xác suất dự đoán của chúng ta chứa object là bao nhiêu? Nghe có vẻ như rất khó để định lượng, vì làm sao để tính ra xác suất vật thể xuất hiện trong 1 dự đoán (box) bất kỳ? Bây giờ, ta tưởng tượng ta có một object đã có ground truth box rồi, với 1 box đự đoán bất kỳ, làm sao tính ra c?
+
+- c bằng 1 khi nào? rõ ràng khi box dự đoán trùng với ground truth box, ta tự tin 100% cho rằng object xuất hiện trong box dự đoán
+
+- c bằng 0 khi nào? chính là khi box dự đoán không giao với ground truth box, ta tự tin 100% rằng dự đoán không chứa object nào, cũng tương đương là tự tin 0% rằng object xuất hiện trong box dự đoán.
+
+- c thuộc (0,1) khi nào? chắc chắn là trừ 2 trường hợp trên, nghĩa là box dự đoán có giao nhau với groud truth box, trong trường hợp này, người ta phát minh ra 1 cách tính độ tự tin đó chính là lấy phần diện tích giao thoa, chia cho phần diện tích mà box dự đoán với box groun truth tạo thành. Chính là khía niệm IoU (Intersect over Union). Hoàn toàn hợp lý phải không, 2 box dự đoán và groud truth càng sát nhau, diện tích phần giao nhau càng lớn, diện tích hợp lại bởi 2 boxes càng nhỏ dẫn tới c càng gần tới 1. Ngược lại, boxes dự đoán và box grouth truth càng xa nhau, hoặc khích thước càng lệch nhau, thì phần diện tích hợp càng lớn trong khi phần diện tích giao nhau thì bé, dẫn tới c càng gần tới 0.
+
+![]()
+
+Quay lại với việc tính confidence loss.
 
 
