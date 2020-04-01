@@ -1,0 +1,8 @@
+---
+title: Test Latex
+date: 2020-04-01T11-21-00
+categories: 
+  - blog
+---
+
+loss_(i,j)=loss_(i,j)^xywh+loss_(i,j)^p+loss_(i,j)^c
