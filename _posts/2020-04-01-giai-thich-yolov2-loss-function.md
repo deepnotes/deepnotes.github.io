@@ -125,7 +125,7 @@ Câu trả lời là do khi chạy inference, tức là lúc test chứ không p
 | $$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6 $$ | quan tâm | quan tâm |
 | $$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6 $$ | quan tâm | không quan tâm |
 
-Nhìn vào bảng trên ta có, đối với những box có chứa object tức là  $$c_{i,j} = 1$$$, thì model dự đoán c bao nhiêu ta cũng quan tâm. Ta phạt để cho $$\hat{c}$$ dự đoán sát với c thực tế. Mặc dù c label là 1. Vì c này liên quan đến bounding box, rõ ràng c thực tế không thể lấy theo label là 1 được. Nó phải được tính dự trên $$\hat{x}, \hat{y}, \hat{w}, \hat{h}$$ so với label $$x,y,w,h$$, tức là tính IoU, tức là tính $$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}}$$
+Nhìn vào bảng trên ta có, đối với những box có chứa object tức là  $$c_{i,j} = 1$$, thì model dự đoán c bao nhiêu ta cũng quan tâm. Ta phạt để cho $$\hat{c}$$ dự đoán sát với c thực tế. Mặc dù c label là 1. Vì c này liên quan đến bounding box, rõ ràng c thực tế không thể lấy theo label là 1 được. Nó phải được tính dự trên $$\hat{x}, \hat{y}, \hat{w}, \hat{h}$$ so với label $$x,y,w,h$$, tức là tính IoU, tức là tính $$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}}$$
 
 
 
