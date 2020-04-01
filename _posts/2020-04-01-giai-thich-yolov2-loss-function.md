@@ -10,7 +10,7 @@ categories:
 </script>
 ---
 
-Biểu diễn bằng công thức toán học của YOLOv2 Loss Function hay Region Loss như sau:
+Đầu tiên, ta xem qua biểu diễn bằng công thức toán học của YOLOv2 Loss Function hay Region Loss như sau, đừng vội choáng ngợp, ta sẽ giải thích từng bước từng bước sau:
 
 $$
 \begin{align}
@@ -38,11 +38,11 @@ $$
 
 Trong đó:
 
-- $$N_{L^{obj}}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}}$$ <pre> <pre>
+- $$N_{L^{obj}}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}}$$ &nbsp
 
-- $$N^{conf}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}} + L_{i,j}^{\text{noobj}}(1-L_{i,j}^{\text{obj}})$$<pre> <pre>
+- $$N^{conf}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}} + L_{i,j}^{\text{noobj}}(1-L_{i,j}^{\text{obj}})$$ &nbsp;
 
-- $$\text{preduiction}_{i,j}=(\hat{x}_{i,j},\hat{y}_{i,j},\hat{w}_{i,j},\hat{h}_{i,j})<pre> <pre>
+- $$\text{preduiction}_{i,j}=(\hat{x}_{i,j},\hat{y}_{i,j},\hat{w}_{i,j},\hat{h}_{i,j}) &nbsp;
 
 - $$\text{ground truth}_{i,j}=(x_{i,j},y_{i,j},w_{i,j},h_{i,j})$$ &nbsp;
 
@@ -70,3 +70,16 @@ L_{i,j}^{\text{noobj}}
 
 \end{align}
 $$
+
+
+Bắt đầu phân tích nha:
+
+Đầu tiên, bạn phải nắm rõ output của YOLOv2 có format như thế nào. Nếu chưa rõ bạn phải đọc lại nhé. Output của YOLO có format $$[grid, grid, B, 5+class]$$. Với grid * gird chiều dài * rộng của feature map mà yolo output ra. Trên mạng người ta hay viết "YOLO chia bức ảnh thành grid*grid ô" đó. B là số lượng Anchor box, 5+class chính là thông tin của mỗi box bao gồm [x, y, h, w, confidence, xác suất của từng class].
+
+Công thức đầu tiên cho ta thấy, region loss bao gồm 3 thành phần. xem qua 3 thành phần đó là gì nha:
+
+- Thành phần đầu tiên là $$loss^{xywh}_(i,j)$$, Bạn thấy xywh trong công thức không, đây là loss liên quan đến vị trí (x,y) và độ lớn của bouding box (w,h).
+
+- Thành phần thứ hai là $$loss^{p}_(i,j)$$, đây là class loss, $$p$$ là ký hiện cho xác suất. Bạn còn nhớ khi YOLO tìm được bounding box của object, nó phải chỉ ra object đó thuộc class nào? Ôtô, xe máy, xe đạp, hay người đi bộ. Vậy loss này để phạt model nếu nếu model đoán sai class của object
+
+- Thành phần thứ ba là $$loss^{c}_{i,j}, c là ký hiệu của confidence. Loss này liên quan đến confidence score.
