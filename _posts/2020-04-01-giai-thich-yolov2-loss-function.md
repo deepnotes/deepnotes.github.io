@@ -38,11 +38,11 @@ $$
 
 Trong đó:
 
-- $$N_{L^{obj}}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}}$$ &nbsp
+- $$N_{L^{obj}}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}}$$ &nbsp;
 
 - $$N^{conf}=\sum_{i=0}^{S^2}\sum_{j=0}^B L_{i,j}^{\text{obj}} + L_{i,j}^{\text{noobj}}(1-L_{i,j}^{\text{obj}})$$ &nbsp;
 
-- $$\text{preduiction}_{i,j}=(\hat{x}_{i,j},\hat{y}_{i,j},\hat{w}_{i,j},\hat{h}_{i,j}) &nbsp;
+- $$\text{preduiction}_{i,j}=(\hat{x}_{i,j},\hat{y}_{i,j},\hat{w}_{i,j},\hat{h}_{i,j})$$ &nbsp;
 
 - $$\text{ground truth}_{i,j}=(x_{i,j},y_{i,j},w_{i,j},h_{i,j})$$ &nbsp;
 
@@ -74,7 +74,7 @@ $$
 
 Bắt đầu phân tích nha:
 
-Đầu tiên, bạn phải nắm rõ output của YOLOv2 có format như thế nào. Nếu chưa rõ bạn phải đọc lại nhé. Output của YOLO có format $$[grid, grid, B, 5+class]$$. Với grid * gird chiều dài * rộng của feature map mà yolo output ra. Trên mạng người ta hay viết "YOLO chia bức ảnh thành grid*grid ô" đó. B là số lượng Anchor box, 5+class chính là thông tin của mỗi box bao gồm [x, y, h, w, confidence, xác suất của từng class].
+Đầu tiên, bạn phải nắm rõ output của YOLOv2 có format như thế nào. Nếu chưa rõ bạn phải đọc lại nhé. Output của YOLO có format $$[grid, grid, B, 5+class]$$. Với $$grid * gird$$ là $$chiều dài * chiều rộng$$ của feature map mà yolo output ra. Trên mạng người ta hay viết "YOLO chia bức ảnh thành $$grid*grid$$ ô" thì đó chính là size của output. $$B$$ là số lượng Anchor box, $$5+class$$ chính là thông tin của mỗi box bao gồm $$[x, y, h, w, confidence, xác suất của từng class]$$.
 
 Công thức đầu tiên cho ta thấy, region loss bao gồm 3 thành phần. xem qua 3 thành phần đó là gì nha:
 
