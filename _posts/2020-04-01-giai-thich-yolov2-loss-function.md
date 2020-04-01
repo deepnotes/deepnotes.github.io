@@ -35,3 +35,33 @@ L^{noobj}_{i,j}(0 - \hat{c}_{i,j})^2
 
 \end{align}
 $$
+
+Trong đó:
+
+- $N_{L^{obj}} = \sum_{i=0}^{S^2} \sum_{j=0}^B L_{i,j}^{\text{obj}}$
+- $N^{conf} =  \sum_{i=0}^{S^2}
+\sum_{j=0}^B L_{i,j}^{\text{obj}} + L_{i,j}^{\text{noobj}}(1-L_{i,j}^{\text{obj}})$
+- $\text{preduiction}_{i,j}=(\hat{x}_{i,j},\hat{y}_{i,j},\hat{w}_{i,j},\hat{h}_{i,j})$
+- $\text{ground truth}_{i,j}=(x_{i,j},y_{i,j},w_{i,j},h_{i,j})$
+- $\lambda_{\text{coord}}$, $\lambda_{\text{class}}$, and $\lambda_{\text{noobj}} là hệ số của mỗi loại loss.
+Trong đó, $L^{\text{obj}}_{i,j}$ và $L^{\text{noobj}}_{i,j}$ là 0 hoặc 1 được xác định như sau:
+$$ 
+\begin{align}
+
+L_{i,j}^{\text{obj}}
+ & = 
+ \begin{cases}
+ 1 
+\;\;\text{if} \;\;C_{i,j}=1\\
+ 0\;\;\text{else}\\
+\end{cases}\\
+L_{i,j}^{\text{noobj}}
+& = 
+\begin{cases}
+ 1 \;\;\text{if}\;\;\text{max}_{i',j'}
+ \;\;IOU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6 \;\text{and}\; C_{i,j} = 0\\
+ 0\;\;\text{else}\\
+\end{cases}\\
+
+\end{align}
+$$
