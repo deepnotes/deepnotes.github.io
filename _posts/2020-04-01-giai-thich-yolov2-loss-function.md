@@ -120,10 +120,12 @@ Hàm loss thực chất là để phạt model để cho nó dự đoán đúng 
 
 Câu trả lời là do khi chạy inference, tức là lúc test chứ không phải lúc train nữa, hệ số confidence (c) này quyết định box dự đoán có được giữ lại hay không. Những box nào có c < 0.6 đều bị loại bỏ. Vì thế trong lúc train, nếu như model dự đoán là có obj (c > 0.6) trong khi thực tế groud truth không chứa object nào, thì ta phải phạt model. Cùng xem bảng sau để cover tổng quát hơn nhé các trường hợp nhé
 
-| | $$c_{i,j} = 1$$$ |  $$c_{i,j} = 0$$$ |
+| | $$c_{i,j} = 1$$ |  $$c_{i,j} = 0$$ |
 |---|---|---|
-|$$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$ | quan tâm | quan tâm |
-|$$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6$$ | quan tâm | không quan tâm |
+| $$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6 $$ | quan tâm | quan tâm |
+| $$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6 $$ | quan tâm | không quan tâm |
+
+Nhìn vào bảng trên ta có, đối với những box có chứa object tức là  $$c_{i,j} = 1$$$, thì model dự đoán c bao nhiêu ta cũng quan tâm. Ta phạt để cho $$\hat{c}$$ dự đoán sát với c thực tế. Mặc dù c label là 1. Vì c này liên quan đến bounding box, rõ ràng c thực tế không thể lấy theo label là 1 được. Nó phải được tính dự trên $$\hat{x}, \hat{y}, \hat{w}, \hat{h}$$ so với label $$x,y,w,h$$, tức là tính IoU, tức là tính $$\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}}$$
 
 
 
