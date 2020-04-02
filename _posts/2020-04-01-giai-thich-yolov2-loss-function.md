@@ -141,6 +141,19 @@ Câu trả lời là do 2 đại lượng, tọa độ và class, phụ thuộc 
 | quan tâm | quan tâm | không quan tâm |
 
 
+$$
+\begin{table}[]
+\begin{tabular}{|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{cij=1}} & \multicolumn{2}{c|}{\textbf{cij = 0}}   \\ \cline{2-3} 
+                                & a \textless 0.6 & a \textgreater{}= 0.6 \\ \hline
+quan tâm                        & quan tâm        & không quan tâm        \\ \hline
+\end{tabular}
+\end{table}
+
+$$
+
+
 
 Nhìn vào bảng trên ta có, hàm loss phạt model về giá trị $$\hat{c}_{i,h}$$ liên quan đến giá tọa độ. Đối với mỗi box dự đoán, giá trị ground truth confidence của box dự đoán không phải là 0 hoặc 1 mà chính là giá trị IoU như phân tích ở trên. Vậy hàm confidence loss phạt khi ground truth ở mộ số điều kiện nào đó. Cụ thể là 4 điều kiện như trên bảng:
 
