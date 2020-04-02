@@ -2,7 +2,14 @@
 title: Giải thích YOLOv2 Loss Function
 date: 2020-04-01T11-21-00
 categories: 
-  - blog
+  - Deep learning
+tags:
+  - YOLO
+  - deep-learning
+  - computer-vision
+  - loss-function
+  - region-loss
+  - explain
 ---
 
 <script type="text/javascript" async
@@ -30,7 +37,7 @@ loss^{xywh}_{i,j} & = \frac{\lambda_{coord}}{N_{L^{obj}}} \sum^{S^2}_{i=0} \sum^
 ]\\
 
 
-loss^{p}_{i,j} & = \frac{\lambda_{class}}{N_{L^{obj}}} \sum^{S^2}_{i=0} \sum^{j=B}_{j=0} L^{obj}_{i,j}
+loss^{p}_{i,j} & = -\frac{\lambda_{class}}{N_{L^{obj}}} \sum^{S^2}_{i=0} \sum^{j=B}_{j=0} L^{obj}_{i,j}
 \sum_{c \in class}p_{i,j,c}log(\hat{p}_{i,j,c}) \\
 
 loss^c_{i,j} & = \frac{\lambda_{obj}}{N_{L^{conf}}}
@@ -90,7 +97,7 @@ Tối đa, yolo có thể dự đoán được bao nhiêu object trong một b�
 
 ## Các thành phần của hàm loss
 
-Okie, quay lại với công thức đầu tiên, ta thấy, region loss bao gồm 3 thành phần. xem qua 3 thành phần $$loss^{xywh}_{i,j}$$, $$ loss^{p}_{i,j}$$, và $$loss^{c}_{i,j}$$:
+Okie, quay lại với công thức đầu tiên, ta thấy, region loss bao gồm 3 thành phần $$loss^{xywh}_{i,j}$$, $$ loss^{p}_{i,j}$$, và $$loss^{c}_{i,j}$$:
 
 - Thành phần đầu tiên là $$loss^{xywh}_{i,j}$$, Bạn thấy xywh trong công thức không, đây là loss liên quan đến vị trí (x,y) và độ lớn của bouding box (w,h), ta gọi đây là loss tọa độ.
 
@@ -110,23 +117,23 @@ Bạn chú ý rằng đối với YOLO, việc xác định xác suất của ob
 
 ## Confidence loss
 
-Cuối cùng khó nhằn nhất là confidence loss. Ta biết giá trị ở confidence (c) này thể hiện cho "độ tự tin" của việc "object xuất hiện trong dự đoán", hay ta có thể hiểu đó là xác suất dự đoán của chúng ta chứa object là bao nhiêu? Nghe có vẻ như rất khó để định lượng, vì làm sao để tính ra xác suất vật thể xuất hiện trong 1 dự đoán (box) bất kỳ? Bây giờ, ta tưởng tượng ta có một object đã có ground truth box rồi, với 1 box đự đoán bất kỳ, làm sao tính ra c?
+Cuối cùng khó nhằn nhất là confidence loss. Ta biết giá trị ở confidence (c) này thể hiện cho "độ tự tin" của việc "object xuất hiện trong dự đoán", hay ta có thể hiểu đó là xác suất dự đoán của chúng ta chứa object là bao nhiêu? Nghe có vẻ như rất khó để định lượng, làm sao để tính ra xác suất vật thể xuất hiện trong 1 dự đoán (box) bất kỳ? Giả sử trong một bức ảnh, ta có một object đã có ground truth box và 1 box đự đoán bất kỳ, làm sao tính ra c?
 
 - c bằng 1 khi nào? rõ ràng khi box dự đoán trùng với ground truth box, ta tự tin 100% cho rằng object xuất hiện trong box dự đoán
 
 - c bằng 0 khi nào? chính là khi box dự đoán không giao với ground truth box, ta tự tin 100% rằng dự đoán không chứa object nào, cũng tương đương là tự tin 0% rằng object xuất hiện trong box dự đoán.
 
-- c thuộc (0,1) khi nào? chắc chắn là trừ 2 trường hợp trên, nghĩa là box dự đoán có giao nhau với groud truth box, trong trường hợp này, người ta phát minh ra 1 cách tính độ tự tin đó chính là lấy phần diện tích giao thoa, chia cho phần diện tích mà box dự đoán với box groun truth tạo thành. Chính là khía niệm IoU (Intersect over Union). Hoàn toàn hợp lý phải không, 2 box dự đoán và groud truth càng sát nhau, diện tích phần giao nhau càng lớn, diện tích hợp lại bởi 2 boxes càng nhỏ dẫn tới c càng gần tới 1. Ngược lại, boxes dự đoán và box grouth truth càng xa nhau, hoặc khích thước càng lệch nhau, thì phần diện tích hợp càng lớn trong khi phần diện tích giao nhau thì bé, dẫn tới c càng gần tới 0.
+- c thuộc (0,1) khi nào? chắc chắn là trừ 2 trường hợp trên, nghĩa là box dự đoán có giao nhau với groud truth box, trong trường hợp này, người ta phát minh ra 1 cách tính độ tự tin đó chính là lấy phần diện tích giao thoa, chia cho phần diện tích hợp lại của box dự đoán với box ground truth. Chính là khía niệm IoU (Intersect over Union - xem ảnh IoU ở dưới cho dễ hiểu nha). Hoàn toàn hợp lý phải không, 2 box dự đoán và groud truth càng sát nhau, diện tích phần giao nhau càng lớn, diện tích hợp lại bởi 2 boxes càng nhỏ dẫn tới c càng gần tới 1. Ngược lại, boxes dự đoán và box grouth truth càng xa nhau, hoặc khích thước càng lệch nhau, thì phần diện tích hợp càng lớn trong khi phần diện tích giao nhau thì bé, dẫn tới c càng gần tới 0.
 
 ![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/iou.png)
 
 Quay lại với việc tính confidence loss, ta chú ý trong công thức thức cuối cùng có chứa thành phần $$L^{obj}_{i,j}$$ và $$L^{noobj}_{i,j}$$. Thành phần thứ nhất hoàn toàn giống với $$L^{obj}_{i,j}$$ trong loss tọa độ và classification loss. Thành phần thứ 2 khá phức tạp hơn.
 
-Thành phần $$L^{noobj}_{i,j}$$ này có 2 yếu tố để quyết định, 1 là boxes này trong ground truth không chứa object, và yếu tố thứ 2 là trong dự đoán, confidence score > 0.6. 
+Thành phần $$L^{noobj}_{i,j}$$ này có 2 yếu tố để quyết định, 1 là boxes này trong grid không chứa object, và yếu tố thứ 2 là giá trị IoU max của box dự đoán với các object < 0.6 ($$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$).
 
 Hàm loss thực chất là để phạt model để cho nó dự đoán đúng hơn về thông tin gì đó. Ở đây confidence phạt model về cái gì. Tại sao confidence loss lại quan tâm tới $$L^{noobj}_{i,j}$$ trong khi những cái khác thì không?
 
-Câu trả lời là do khi chạy inference, tức là lúc test chứ không phải lúc train nữa, hệ số confidence (c) này quyết định box dự đoán có được giữ lại hay không. Những box nào có c < 0.6 đều bị loại bỏ. Vì thế trong lúc train, nếu như model dự đoán là có obj (c > 0.6) trong khi thực tế groud truth không chứa object nào, thì ta phải phạt model. Cùng xem bảng sau để cover tổng quát hơn, từ công thức của confidence loss, ta vẽ bảng sau:
+Câu trả lời là do khi chạy inference, tức là lúc test chứ không phải lúc train nữa, hệ số confidence (c) này quyết định box dự đoán có được giữ lại hay không. Những box nào có $$\hat{c} < 0.6$$ đều bị loại bỏ. Vì thế trong lúc train, nếu như model dự đoán là có obj ($$\hat{c} < 0.6$$) cùng với grid đó thực chất không chứa object nào, thì ta phải "khuyến khích" model cho ra confidence gần về 0. Cùng xem bảng sau để cover tổng quát hơn, từ công thức của confidence loss, ta vẽ bảng sau:
 
 | | $$c_{i,j} = 1$$ |  $$c_{i,j} = 0$$ |
 |---|---|---|
