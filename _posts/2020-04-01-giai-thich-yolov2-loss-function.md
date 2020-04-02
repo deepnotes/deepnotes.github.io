@@ -25,6 +25,8 @@ tags:
 
 - [Confidence loss](#confidence-loss)
 
+- [Kết](#tổng-kết)
+
 Đầu tiên, ta xem qua biểu diễn bằng công thức toán học của YOLOv2 Loss Function hay Region Loss như sau, đừng vội choáng ngợp, ta sẽ giải thích từng bước từng bước sau:
 
 $$
