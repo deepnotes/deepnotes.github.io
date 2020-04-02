@@ -135,40 +135,22 @@ Hàm loss thực chất là để phạt model để cho nó dự đoán đúng 
 
 Câu trả lời là do 2 đại lượng, tọa độ và class, phụ thuộc vào confidence. Trong test time, những box nào có giá trị confidence < 0.6 đều bị loại bỏ.
 
-| $$c_{i,j} = 1$$ |  $$c_{i,j} = 0$$ |
-| |$$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$ |  $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6$$ |
-|---|---|---|
-| quan tâm | quan tâm | không quan tâm |
-
-
 $$
 \begin{array}{c|c}
-   a^2-b^2 & 
-   \begin{array}{ccc} 1+i & 1-i & \frac{1}{\sqrt{2}}
-   \end{array} \\\hline  
-   \color{green}{
-      \begin{array}{c}a-b \\  a+b \end{array}
-   } & \sqrt {2}
-\end{array}
-$$
-
-$$
-\begin{array}{c|c}
-  \text{C(i,h) = 1} &
+  C_{i,j}=1 &
   \begin{array}{c}
-    \text{C(i,h) = 1}\\\hline
+    C_{i,j}=0\\\hline
     \begin{array}{c|c}
-      \text{IoU < 0.6} &
-      \text{IoU >= 0.6}
+      \text{IoU}_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6 &
+      \text{IoU}_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6
      \end{array}
   \end{array}
   \\\hline
   \text{khuyến khích} & 
   \begin{array}{c|c}
-    \text{khuyến khích} &
-    \text{khuyến khích}
-  \\end{array}
-  \\\hline
+    \space\space\text{khuyến khích}\space\space\space\space\space\space &
+    \text{không khuyến khích}
+  \end{array}
 \end{array}
 $$
 
