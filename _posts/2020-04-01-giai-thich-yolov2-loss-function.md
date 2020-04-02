@@ -133,12 +133,12 @@ Thành phần $$L^{noobj}_{i,j}$$ này có 2 yếu tố để quyết định, 1
 
 Hàm loss thực chất là để phạt model để cho nó dự đoán đúng hơn về thông tin gì đó. Ở đây confidence phạt model về cái gì. Tại sao confidence loss lại quan tâm tới $$L^{noobj}_{i,j}$$ trong khi những cái khác thì không?
 
-Câu trả lời là do khi chạy inference, tức là lúc test chứ không phải lúc train nữa, hệ số confidence (c) này quyết định box dự đoán có được giữ lại hay không. Những box nào có $$\hat{c} < 0.6$$ đều bị loại bỏ. Vì thế trong lúc train, nếu như model dự đoán là có obj ($$\hat{c} < 0.6$$) cùng với grid đó thực chất không chứa object nào, thì ta phải "khuyến khích" model cho ra confidence gần về 0. Cùng xem bảng sau để cover tổng quát hơn, từ công thức của confidence loss, ta vẽ bảng sau:
+Câu trả lời là do 2 đại lượng, tọa độ và class, phụ thuộc vào confidence. Trong test time, những box nào có giá trị confidence < 0.6 đều bị loại bỏ.
 
-| | $$c_{i,j} = 1$$ |  $$c_{i,j} = 0$$ |
+| $$c_{i,j} = 1$$ |  $$c_{i,j} = 0$$ |
+| |$$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$ |  $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6$$ |
 |---|---|---|
-| $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$ | quan tâm | quan tâm |
-| $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6$$ | quan tâm | không quan tâm |
+| quan tâm | quan tâm | không quan tâm |
 
 
 
