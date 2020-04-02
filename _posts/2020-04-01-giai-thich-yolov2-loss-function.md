@@ -135,24 +135,7 @@ Hàm loss thực chất là để phạt model để cho nó dự đoán đúng 
 
 Câu trả lời là do 2 đại lượng, tọa độ và class, phụ thuộc vào confidence. Trong test time, những box nào có giá trị confidence < 0.6 đều bị loại bỏ.
 
-$$
-\begin{array}{c|c}
-  C_{i,j}=1 &
-  \begin{array}{c}
-    C_{i,j}=0\\\hline
-    \begin{array}{c|c}
-      \text{IoU}_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6 &
-      \text{IoU}_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} >= 0.6
-     \end{array}
-  \end{array}
-  \\\hline
-  \text{khuyến khích} & 
-  \begin{array}{c|c}
-    \space\space\text{khuyến khích}\space\space\space\space\space\space &
-    \text{không khuyến khích}
-  \end{array}
-\end{array}
-$$
+![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/2020-04-01-giai-thich-yolov2-loss-function/conf_loss.jpg)
 
 
 
