@@ -129,23 +129,33 @@ Cuối cùng khó nhằn nhất là confidence loss. Ta biết giá trị ở co
 
 Quay lại với việc tính confidence loss, ta chú ý trong công thức thức cuối cùng có chứa thành phần $$L^{obj}_{i,j}$$ và $$L^{noobj}_{i,j}$$. Thành phần thứ nhất hoàn toàn giống với $$L^{obj}_{i,j}$$ trong loss tọa độ và classification loss. Thành phần thứ 2 khá phức tạp hơn.
 
-Thành phần $$L^{noobj}_{i,j}$$ này có 2 yếu tố để quyết định, 1 là boxes này trong grid không chứa object, và yếu tố thứ 2 là giá trị IoU max của box dự đoán với các object < 0.6 ($$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$).
+Thành phần $$L^{noobj}_{i,j}$$ này có 2 yếu tố để quyết định, 1 là boxes này trong grid không chứa object, và yếu tố thứ 2 là giá trị IoU max của box dự đoán với các object < 0.6 ($$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$), mình gọi tắt $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}}$$ là IoU ground truth.
 
-Hàm loss thực chất là để phạt model để cho nó dự đoán đúng hơn về thông tin gì đó. Ở đây confidence phạt model về cái gì. Tại sao confidence loss lại quan tâm tới $$L^{noobj}_{i,j}$$ trong khi những cái khác thì không?
+Hàm loss thực chất là để phạt model để cho nó dự đoán đúng hơn về thông tin gì đó. Ở đây (1) confidence loss phạt model về cái gì? (2) Tại sao confidence loss lại quan tâm tới $$L^{noobj}_{i,j}$$ trong khi loss tọa độ và class loss thì không?
 
-Câu trả lời là do 2 đại lượng, tọa độ và class, phụ thuộc vào confidence. Trong test time, những box nào có giá trị confidence < 0.6 đều bị loại bỏ.
+Để trả lời cho câu hỏi thứ 2, trong test time, những box nào có giá trị confidence < 0.6 đều bị loại bỏ. Khi bị loại bỏ thì giá trị tọa độ và class không có ý nghĩa gì nữa. Vậy để loại bỏ box không chứa object, model chỉ cần học cách giảm confidence score của boxes đó là được, còn giá trị tọa độ và xác suất của từng class không cần quan tâm.
+
+Để trả lời cho câu hỏi thứ nhất, ta xem bảng sau - bảng thể hiện các trường hợp hàm confidence loss phạt model (quan tâm) và trường hợp không phạt model (không quan tâm):
 
 ![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/2020-04-01-giai-thich-yolov2-loss-function/conf_loss.jpg)
 
 
 
-Nhìn vào bảng trên ta có, hàm loss phạt model về giá trị $$\hat{c}_{i,h}$$ liên quan đến giá tọa độ. Đối với mỗi box dự đoán, giá trị ground truth confidence của box dự đoán không phải là 0 hoặc 1 mà chính là giá trị IoU như phân tích ở trên. Vậy hàm confidence loss phạt khi ground truth ở mộ số điều kiện nào đó. Cụ thể là 4 điều kiện như trên bảng:
+Nhìn vào bảng trên ta có, khi $$c_{i,j} = 1$$ thì hàm loss phạt model về giá trị $$\hat{c}_{i,h}$$ bất kể IoU ground truth bằng bao nhiêu. Ở hàm loss ta có MSE của các box chứa object như sau: $$(IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} - c_{i,j})^2$$. Khuyến kích modle output ra $$\hat{c_{i,j}}$$ gần với giá trị IoU ground truth.
 
-- Khi $$c_{i,j} = 1$$ (cột 2) thì ta quan tâm điều chỉnh $$\hat{c}$$ dự đoán này sát với $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}}$$ nhất.
+Đối với trường hợp $$c_{i,j} = 0$$, confidence loss chỉ phạt model khi mà IoU ground truth nhỏ hơn 0.6, khuyến khích model output ra $$\hat{c_{i,j}}$$ về 0. Rõ ràng, đúng không? trường hợp này chính là trường hợp ta muốn loại bỏ boxes. Ngược lại khi IoU ground truth $\geq$ 0.6, ta hàm loss không quan tâm. Tại sao không quan tâm? Vì điều kiện ở đây đối ngược nhau, Cụ thể, $$c_{i,j} = 0$$ nghĩa là box không chứa object, nhưng IoU ground truth $$\geq$$ 0.6 lại thể hiện là box có chứa object. Ta nên khuyến khích model ouput ra $$\hat{c_{i,j}}$$ về giá trị bao nhiêu? rõ ràng bao nhiêu cũng không hợp lý, vì thế hàm confidence loss bỏ qua trường hợp này.
 
-- Khi $$c_{i,j} = 0$$ (cột 3) thì ta quan tâm điều chỉnh $$\hat{c}$$ dự đoán này xuống 0 trong trường hợp $$IoU_{\text{preduiction}_{i,j}}^{\text{ground truth}_{i',j'}} < 0.6$$ nhất.
+## Tổng kết
 
-đối với những box có chứa object tức là  $$c_{i,j} = 1$$, thì model dự đoán c bao nhiêu ta cũng quan tâm. Ta phạt để cho $$\hat{c}$$ dự đoán sát với c thực tế. Mặc dù c label là 1. Vì c này liên quan đến bounding box, rõ ràng c thực tế không thể lấy theo label là 1 được. Nó phải được tính dự trên $$\hat{x}, \hat{y}, \hat{w}, \hat{h}$$ so với label $$x,y,w,h$$, tức là tính IoU, tức là tính $$\text{preduiction}_{i,j}^{\text{ground truth}_{i',j'}}$$
+- YOLOv2 loss hay region loss bao gồm 3 thành phần độc lập là loss tọa độ, classification loss, và confidence loss.
+
+- Loss tọa độ có dạng MSE
+
+- Classification loss có dạng Negative Log Likelihood
+
+- Confidence cũng có dạng MSE nhưng chia nhỏ ra 3 trường hợp, trường hợp 1 khuyến khích model cho ra confidence gần với IoU ground truth, trường hợp 2 khuyến khích model cho ra confidence = 0 để loại bỏ và trường hộp thứ 3 là không quan tâm.
+
+Bài viết khá dài và cần kiến thức cơ bản về YOLO, ngoài ra cần đọc kỹ, vì thế có gì không hiểu hoặc mình sai, xin để lại bình luận!
 
 
 
