@@ -143,12 +143,32 @@ Câu trả lời là do 2 đại lượng, tọa độ và class, phụ thuộc 
 
 $$
 \begin{array}{c|c}
- a^2-b^2 & 
- \begin{array}{ccc} 1+i & 1-i & \frac{1}{\sqrt{2}}
- \end{array} \\\hline  
- \color{green}{
- \begin{array}{c}a-b \\  a+b \end{array}
- } & \sqrt {2}
+   a^2-b^2 & 
+   \begin{array}{ccc} 1+i & 1-i & \frac{1}{\sqrt{2}}
+   \end{array} \\\hline  
+   \color{green}{
+      \begin{array}{c}a-b \\  a+b \end{array}
+   } & \sqrt {2}
+\end{array}
+$$
+
+$$
+\begin{array}{c|c}
+  \text{C(i,h) = 1} &
+  \begin{array}{c}
+    \text{C(i,h) = 1}\\\hline
+    \begin{array}{c|c}
+      \text{IoU < 0.6} &
+      \text{IoU >= 0.6}
+     \end{array}
+  \end{array}
+  \\\hline
+  \text{khuyến khích} & 
+  \begin{array}{c|c}
+    \text{khuyến khích} &
+    \text{khuyến khích}
+  \\end{array}
+  \\\hline
 \end{array}
 $$
 
