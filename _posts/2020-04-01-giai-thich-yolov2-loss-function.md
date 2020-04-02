@@ -103,7 +103,7 @@ Okie, quay lại với công thức đầu tiên, ta thấy, region loss bao g�
 
 - Thành phần đầu tiên là $$loss^{xywh}_{i,j}$$, Bạn thấy xywh trong công thức không, đây là loss liên quan đến vị trí (x,y) và độ lớn của bouding box (w,h), ta gọi đây là loss tọa độ.
 
-- Thành phần thứ hai là $$loss^{p}_{i,j}$$, đây là class loss, $$p$$ là ký hiện cho xác suất. Bạn còn nhớ khi YOLO tìm được bounding box của object, nó phải chỉ ra object đó thuộc class nào? Ôtô, xe máy, xe đạp, hay người đi bộ. Vậy loss này để phạt model nếu nếu model đoán sai class của object. Ta gọi loss này là Classification loss.
+- Thành phần thứ hai là $$loss^{p}_{i,j}$$, đây là class loss, $$p$$ là ký hiện cho probability (xác suất). Bạn còn nhớ khi YOLO tìm được bounding box của object, nó phải chỉ ra object đó thuộc class nào? Ôtô, xe máy, xe đạp, hay người đi bộ. Vậy loss này để phạt model nếu nếu model đoán sai class của object. Ta gọi loss này là Classification loss.
 
 - Thành phần thứ ba là $$loss^{c}_{i,j}$$, c là ký hiệu của confidence. Loss này liên quan đến confidence score. Ta gọi là Confidence loss.
 
@@ -111,7 +111,7 @@ Okie, quay lại với công thức đầu tiên, ta thấy, region loss bao g�
 
 Đối với trường hợp liên quan đến dự đoán giá trị, ta thường dùng khoảng cách để tính độ sai lệch của giá trị đoán được với giá trị của nhãn. Khoảng cách này đơn giản nhất là khoảng cách euclid. Tuy nhiên trong trường hợp này ta dùng Mean Square Error (MSE) đơn giản vì nó đơn giản. :D
 
-Ở đây cần chú ý là ta không tính MSE đối với toàn bộ bounding boxes mà model dự đoán so với groud truth, ta chỉ tính MSE đối với những box xuất hiện object.Tuy ở trong công thức, i chạy từ 0 đến $$S^2$$ và j chạy từ 0 đến $$B$$ tuy nhiên, hệ số $$L^{obj}_{i,j}$$ sẽ có giá trị bằng 0 tại các box không xuất hiện object, điều này sẽ làm cho các boxes không chứa object này ko còn liên quan đến giá trị của hàm loss nữa. Okie, loss tọa độ không có gì khó phải không?
+Ở đây cần chú ý là ta không tính MSE đối với toàn bộ bounding boxes model dự đoán được so với ground truth, ta chỉ tính MSE đối với những box xuất hiện object.Tuy ở trong công thức, i chạy từ 0 đến $$S^2$$ và j chạy từ 0 đến $$B$$ tuy nhiên, hệ số $$L^{obj}_{i,j}$$ sẽ có giá trị bằng 0 tại các box không xuất hiện object (Chú ý ở đây mình nhắc đến "box không xuất hiện object" nghĩa là trong ground truth box này không chứa tâm của bất kỳ object nào cả) điều này sẽ làm cho các boxes không chứa object này ko còn liên quan đến giá trị của hàm loss nữa. Okie, loss tọa độ không có gì khó phải không?
 
 ## Classification loss
 
