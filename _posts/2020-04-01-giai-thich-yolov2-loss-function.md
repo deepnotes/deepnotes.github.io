@@ -142,15 +142,14 @@ Câu trả lời là do 2 đại lượng, tọa độ và class, phụ thuộc 
 
 
 $$
-\begin{table}[]
-\begin{tabular}{|c|c|c|}
-\hline
-\multirow{2}{*}{\textbf{cij=1}} & \multicolumn{2}{c|}{\textbf{cij = 0}}   \\ \cline{2-3} 
-                                & a \textless 0.6 & a \textgreater{}= 0.6 \\ \hline
-quan tâm                        & quan tâm        & không quan tâm        \\ \hline
-\end{tabular}
-\end{table}
-
+\begin{array}{c|c}
+ a^2-b^2 & 
+ \begin{array}{ccc} 1+i & 1-i & \frac{1}{\sqrt{2}}
+ \end{array} \\\hline  
+ \color{green}{
+ \begin{array}{c}a-b \\  a+b \end{array}
+ } & \sqrt {2}
+\end{array}
 $$
 
 
