@@ -1,11 +1,12 @@
 ---
 title: Quan hệ nhiều nhiều trong cơ sở dữ liệu
-date: 2020-03-23T21-26-00
+date: 2020-03-23
 categories:
   - Database
 tags:
   - database
   - mindset
+path: /blog/multi-multi-relationship-trong-database
 ---
 Hôm nay mình tiếp tục làm một ứng dụng nho nhỏ, trong đó ứng dụng có chức năng cho người dùng (user) đăng ký theo dõi (subscribe) các kênh livestream họ yêu thích (channel).
 Hãy thử thiết kế database chứa thông tin người dùng và kênh họ theo dõi nha.
@@ -28,7 +29,7 @@ Tuy nhiên, nếu bạn là backend dev. Bạn phải quan tâm database lưu d�
 
 - Sau đó ta xác định mối quan hệ giữa 2 đối tượng này.
 
-![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/relationship.jpg)
+![](../images/2020-03-23-multi-multi-relationship-trong-database/relationship.jpg)
 
 - Theo kiến thức còn sót lại về database thì đó là quan hệ nhiều nhiều, n-n. Rõ ràng một người dùng có thể sẽ đăng ký nhiều kênh, và mỗi kênh có thể có nhiều người đăng ký.
 
@@ -36,7 +37,7 @@ Tuy nhiên, nếu bạn là backend dev. Bạn phải quan tâm database lưu d�
 
 - Để giải quyết điều này thì từ cổ chí kim người ta đã thiết kế giải pháp đó là dùng thêm một table nữa. Table này thể hiện mối liên kết giữa User và Channel. Ta gọi table nầy là subscription. 
 
-![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/association.jpg)
+![](https://../images/2020-03-23-multi-multi-relationship-trong-database/association.jpg)
 
 - Đối với Table User và Table Channel thì ta tạo khóa chính là id (rõ ràng).
 

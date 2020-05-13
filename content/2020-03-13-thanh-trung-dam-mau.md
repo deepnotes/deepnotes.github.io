@@ -1,11 +1,12 @@
 ---
 title: "Một cuộc thanh trừng đẫm máu"
-date: 2020-03-13T15:34:30-04:00
+date: 2020-03-13
 categories:
   - blog
 tags:
   - Jekyll
   - update
+path: /blog/thanh-trung-dam-mau
 ---
 
 Sự nghiệp viết blog cũng đã trải qua gần chục năm nhưng nhìn lại công trình thì "lòng đau như cắt, nước mắt đầm đìa!"

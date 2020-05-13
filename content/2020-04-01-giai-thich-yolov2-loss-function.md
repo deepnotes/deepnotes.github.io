@@ -1,6 +1,6 @@
 ---
 title: Giải thích YOLOv2 Loss Function
-date: 2020-04-01T11-21-00
+date: 2020-04-01
 categories: 
   - Deep learning
 tags:
@@ -10,6 +10,7 @@ tags:
   - loss-function
   - region-loss
   - explain
+path: /blog/giai-thich-yolov2-loss-function
 ---
 
 <script type="text/javascript" async
@@ -127,7 +128,7 @@ Cuối cùng khó nhằn nhất là confidence loss. Ta biết giá trị ở co
 
 - c thuộc (0,1) khi nào? chắc chắn là trừ 2 trường hợp trên, nghĩa là box dự đoán có giao nhau với groud truth box, trong trường hợp này, người ta phát minh ra 1 cách tính độ tự tin đó chính là lấy phần diện tích giao thoa, chia cho phần diện tích hợp lại của box dự đoán với box ground truth. Chính là khía niệm IoU (Intersect over Union - xem ảnh IoU ở dưới cho dễ hiểu nha). Hoàn toàn hợp lý phải không, 2 box dự đoán và groud truth càng sát nhau, diện tích phần giao nhau càng lớn, diện tích hợp lại bởi 2 boxes càng nhỏ dẫn tới c càng gần tới 1. Ngược lại, boxes dự đoán và box grouth truth càng xa nhau, hoặc khích thước càng lệch nhau, thì phần diện tích hợp càng lớn trong khi phần diện tích giao nhau thì bé, dẫn tới c càng gần tới 0.
 
-![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/iou.png)
+![](../images/2020-04-01-giai-thich-yolov2-loss-function/iou.png)
 
 Quay lại với việc tính confidence loss, ta chú ý trong công thức thức cuối cùng có chứa thành phần $$L^{obj}_{i,j}$$ và $$L^{noobj}_{i,j}$$. Thành phần thứ nhất hoàn toàn giống với $$L^{obj}_{i,j}$$ trong loss tọa độ và classification loss. Thành phần thứ 2 khá phức tạp hơn.
 
@@ -139,7 +140,7 @@ Hàm loss thực chất là để phạt model để cho nó dự đoán đúng 
 
 Để trả lời cho câu hỏi thứ nhất, ta xem bảng sau - bảng thể hiện các trường hợp hàm confidence loss phạt model (quan tâm) và trường hợp không phạt model (không quan tâm):
 
-![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/2020-04-01-giai-thich-yolov2-loss-function/conf_loss.jpg)
+![](../images/2020-04-01-giai-thich-yolov2-loss-function/conf_loss.jpg)
 
 
 

@@ -1,10 +1,11 @@
 ---
 title: Tào lao về productive
-date: 2020-03-22T20-07-00
+date: 2020-03-22
 categories:
   - mindset
 tag:
   - productive
+path: /blog/tao-lao-ve-productive
 ---
 Productive là hướng tới sản phẩm, mang tính sản phẩm. Một người có tính productive tức là một người có phong cách làm việc hướng tới tạo ra sản phẩm.
 Một người có tính productive thường là người có performance cao.
@@ -35,7 +36,7 @@ Hơn nữa, khi bạn đọc đến đây, có nghĩa là mình đã hoàn thàn
 
 Bonus, thêm cái ảnh mình vẽ sketch cái app đang làm thể hiện tí về productive :D
 
-![](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/app-sketch.jpg)
+![](../images/2020-03-22-tao-lao-ve-productive/app-sketch.jpg)
 
 Ok! Chữ viết tay cần được cải thiện T_T
 

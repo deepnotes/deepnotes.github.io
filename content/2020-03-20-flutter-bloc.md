@@ -1,11 +1,12 @@
 ---
 title: "Flutter BLoC"
-date: 2020-03-21T10:23:00
+date: 2020-03-21
 categories:
   - Flutter
 Tags:
   - OOP
   - Flutter
+path: /blog/flutter-bloc
 ---
 
 Nếu ai mới tìm hiểu về Flutter như mình sẽ gặp một chút khó khăn khi làm quen với các khái niệm. Một trong số đó là BLoC hay Bussiness Logic Component.
@@ -22,7 +23,7 @@ Thứ hai, nói về Flutter BLoC. Nó được implement đầy đủ như th�
  - Tất nhiên khi code thì có hơi lằng nhẵng vì liên quan đến OOP chẳng hạn như truyền các tham số cho kiểu Generic, vv. Nhưng nếu hiểu vai trò của chúng thì ta đỡ bị rối.
  - Dưới đây mình note lại 3 core concept đó, nhìn vô sẽ rất dễ hiểu. Để chắc nữa chỉ cần đọc qua một lượt docs của thư viện tại [đây](https://bloclibrary.dev/#/flutterbloccoreconcepts) sẽ rõ ngay!
  
-![img](https://raw.githubusercontent.com/deepnotes/deepnotes.github.io/master/assets/images/flutter-bloc.jpg) 
+![img](../images/2020-03-20-flutter-bloc/flutter-bloc.jpg) 
 
  - Trong Flutter, tất cả đều là widget, cũng giống như trong react, tất cả đều là view. BLoCProvider là thằng widget đặc biệt giúp ta tách riêng ra khối xử lý giao diện là BLoCBuilder và khối logic là BLoC.
 
