@@ -1,14 +1,16 @@
 {
-  "name": "gatsby-theme-julia",
-  "author": "Niklas Metje <hi@niklasmtj.de>",
+  "name": "DeepNotesBlog",
   "private": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/niklasmtj/gatsby-theme-julia.git"
+  "author": "Noi Truong <noitq.hust@gmail.com>",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
-  "version": "1.0.1",
-  "main": "index.js",
-  "license": "MIT",
   "peerDependencies": {
     "gatsby": "^2.13.1",
     "react": "^16.8.6",
@@ -26,6 +28,7 @@
     "gatsby": "^2.13.1",
     "gatsby-image": "^2.1.2",
     "gatsby-plugin-emotion": "^4.0.7",
+    "gatsby-plugin-google-analytics": "^2.3.1",
     "gatsby-plugin-manifest": "^2.1.1",
     "gatsby-plugin-offline": "^2.1.1",
     "gatsby-plugin-react-helmet": "^3.0.12",
@@ -46,9 +49,8 @@
     "react-helmet": "^5.2.1",
     "typeface-nunito": "0.0.72"
   },
+  "license": "MIT",
   "keywords": [
-    "gatsby",
-    "gatsby-theme",
-    "gatsby-plugin"
+    "gatsby"
   ]
 }
