@@ -1,14 +1,11 @@
 import React from "react"
-
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import PageTemplate from "../templates/page"
 
 const NotFoundPage = () => (
-  <Layout>
-    <SEO title="404: Not found" />
-    <h1>NOT FOUND</h1>
-    <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-  </Layout>
+  <PageTemplate pageTitle="404: Không tìm thấy trang">
+    <h1>Ôi không!</h1>
+    <p>Trang không tồn tại hoặc tác giả đã gỡ bỏ do nội dung quá cũ</p>
+  </PageTemplate>
 )
 
 export default NotFoundPage

@@ -1,0 +1,27 @@
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 300;
+  background-color: #fdfdfd;
+}
+
+a {
+  color: #2a7ae2;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #205caa;
+}

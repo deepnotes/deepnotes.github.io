@@ -1,0 +1,152 @@
+
+.container {
+  max-width: 620px;
+  height: auto;
+  min-height: calc(100% - 260px);
+  margin: 0 auto;
+  padding: 20px;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+body .main {
+  font-size: 16px;
+  margin-right: 60px;
+  max-width: 800px;
+}
+
+.main ul, .main ul li {
+  margin-bottom: 8px;
+  margin-top: 8px;
+  line-height: 24px;
+}
+
+.main ul {
+  padding-left: 30px;
+}
+
+.post-header {
+  margin: 10px 0 30px;
+}
+
+.blog-post-content h2 {
+  font-size: 26px;
+  letter-spacing: -1.25px;
+  line-height: 1;
+  font-weight: 300;
+  margin: 40px 0 20px;
+}
+
+.home-list-item {
+  margin-bottom: 14px;
+  font-size: 0.9em;
+  position: relative;
+}
+
+.home-date-indicator {
+  color: #888;
+  margin-right: 10px;
+}
+
+.home-list-item a {
+  font-size: 1.4em;
+  line-height: 1.4em;
+  margin-top: 5px;
+}
+
+.topic-tag {
+  display: inline-block;
+  padding: 5px 8px;
+  margin: 5px;
+  background: #eee;
+}
+
+.toc-container {
+  position: fixed;
+  top: 145px;
+  max-width: 280px;
+  transform: translateX(600px);
+  opacity: .2;
+  transition: opacity .5s;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+  z-index: 999;
+}
+
+.toc-container ul li:before {
+  content: none;
+}
+
+.toc-container ul li h2:before,
+.toc-container ul li h3:before,
+.toc-container ul li h4:before,
+.toc-container ul li h5:before,
+.toc-container ul li h6:before {
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.toc-container:hover {
+  opacity: 1;
+}
+
+.toc-container ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc-first;
+}
+
+.toc-container ul li {
+  margin: 0;
+}
+
+.toc-container ul li h2 {
+  counter-increment: toc-first;
+  counter-reset: toc-second;
+}
+
+.toc-container ul li a {
+  color: #333;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.toc-container ul li h2,
+.toc-container ul li h3,
+.toc-container ul li h4,
+.toc-container ul li h5,
+.toc-container ul li h6 {
+  margin: 0;
+  padding: 0;
+}
+
+.toc-container ul li h2:before {
+  content: counter(toc-first) ".";
+}
+
+@media screen and (min-width: 800px) {
+  .full-width .gatsby-resp-image-image {
+    width: unset !important;
+    height: unset !important;
+    position: relative !important;
+    max-width: 800px !important;
+    margin-left: -140px !important;
+  }
+
+  .full-width  .gatsby-resp-image-background-image {
+    display: unset !important;
+  }
+}
+
+
+
+@media screen and (max-width: 630px) {
+  .toc-container {
+      display: none;
+  }
+}
