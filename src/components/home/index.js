@@ -13,7 +13,7 @@ export default ({ posts }) => {
       <ul className="posts" >
         {posts.map(({ node }, i) => {
           const title = get(node, 'frontmatter.title')
-          const excerpt = get(node, 'frontmatter.excerpt')
+          const excerpt = get(node, 'excerpt')
           return (
             <li key={i}>
               <span class="post-date">{node.frontmatter.date}</span>

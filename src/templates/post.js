@@ -2,9 +2,9 @@ import React from "react"
 import { graphql } from "gatsby"
 import {get} from 'lodash'
 import SEO from '../components/seo'
-import TopHeader from '../components/top-header'
+import TopHeader from '../components/header'
 import Post from '../components/post'
-import Footer from "../footer"
+import Footer from "../components/footer"
 
 export default ({data}) => {
     const postTitle = get(data, 'markdownRemark.frontmatter.title')

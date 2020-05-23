@@ -24,7 +24,8 @@ export default ({ data }) => {
   return (
     <div className="container">
       <div className="main">
-        {h2Headings.length > 0
+        {/* {h2Headings.length > 0 */}
+        {false 
           ? <div className="toc-container">
             <ul>
               {/* eslint-disable-next-line */}

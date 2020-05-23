@@ -11,7 +11,7 @@ const TopHeader = ({ siteTitle }) => (
     <div class="wrap">
 
       <div style={{float:'left', marginTop:10, marginRight:10}}>
-        <a href="/feed.xml">
+        <a href="/">
           <img style={{ maxHeight: 40, maxWidth: 76 }} src={Logo} alt="logo" />
         </a>
       </div>

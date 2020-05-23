@@ -1,8 +1,8 @@
 import React from "react"
 import SEO from "../components/seo"
-import TopHeader from '../components/top-header'
+import TopHeader from '../components/header'
 import './page.css'
-import Footer from "../footer"
+import Footer from "../components/footer"
 
 export default (props) => {
   const { pageTitle, siteTitle, siteDescription, children } = props
@@ -16,7 +16,7 @@ export default (props) => {
             {children}
           </div>
         </div>
-        {/* <Footer siteTitle={siteTitle} siteDescription={siteDescription}/> */}
+        <Footer siteTitle={siteTitle} siteDescription={siteDescription}/>
       </div>
     </div>
   )
