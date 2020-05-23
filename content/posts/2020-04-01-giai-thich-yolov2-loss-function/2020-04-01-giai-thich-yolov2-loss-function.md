@@ -2,7 +2,7 @@
 title: Giải thích YOLOv2 Loss Function
 date: 2020-04-01
 tags: YOLO, deep-learning, computer-vision, loss-function
-path: /blog/giai-thich-yolov2-loss-function
+path: /giai-thich-yolov2-loss-function
 featuredImage: ./conf_loss.jpg
 description: Giới thiệu linear regression, linear regression bằng gradient descent, linear regression của thư viện sklearn
 ---

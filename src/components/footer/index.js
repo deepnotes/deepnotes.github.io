@@ -38,7 +38,7 @@ export default function Footer(props) {
         </div>
 
         <div class="footer-col-3 column">
-          <p class="text">Hi! I'm Noi, I am a Dev and a Machine Learning enthusiast. I built some small things and noted here.</p>
+          <p class="text">Hi! I'm Noi, I am a Dev and a Machine Learning enthusiast.</p>
         </div>
 
       </div >

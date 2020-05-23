@@ -2,7 +2,7 @@
 title: "Một cuộc thanh trừng đẫm máu"
 date: 2020-03-13
 tags: Jekyll, update
-path: /blog/thanh-trung-dam-mau
+path: /thanh-trung-dam-mau
 featuredImage: ./conf_loss.jpg
 description: Giới thiệu linear regression, linear regression bằng gradient descent, linear regression của thư viện sklearn
 ---
